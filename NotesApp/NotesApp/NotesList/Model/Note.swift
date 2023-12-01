@@ -5,7 +5,7 @@
 //  Created by pravda on 27.11.2023.
 //
 
-import Foundation
+import UIKit
 
 struct Note: TableViewItemProtocol {
     let title: String

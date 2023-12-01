@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class ImageNoteTableViewCell: UITableViewCell {
    //MARK: - GUI Variables
@@ -14,6 +15,17 @@ final class ImageNoteTableViewCell: UITableViewCell {
         
         view.backgroundColor = .importYellow
         view.layer.cornerRadius = 10
+        
+        return view
+    }()
+    
+    private let attachmentView: UIImageView = {
+        let view = UIImageView()
+        
+        view.layer.cornerRadius = 10
+        view.image = UIImage(named: "mockImage")
+        view.layer.masksToBounds = true
+        view.contentMode = .scaleAspectFill
         
         return view
     }()
@@ -27,16 +39,6 @@ final class ImageNoteTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let attachmentView: UIImageView = {
-        let view = UIImageView()
-        
-        view.layer.cornerRadius = 10
-        view.image = UIImage(named: "mockImage")
-        view.layer.masksToBounds = true
-        view.contentMode = .scaleAspectFill
-        
-        return view
-    }()
     
     //MARK: - Initialisations
     override init(style: UITableViewCell.CellStyle,
@@ -81,7 +83,7 @@ final class ImageNoteTableViewCell: UITableViewCell {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(attachmentView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(10)
-            
+            make.bottom.equalToSuperview().inset(10)
         }
     }
 }
