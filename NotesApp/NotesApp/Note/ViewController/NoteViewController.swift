@@ -26,6 +26,7 @@ final class NoteViewController: UIViewController {
 
         view.layer.cornerRadius = 10
         view.layer.borderColor = UIColor.lightGray.cgColor
+        view.font = .systemFont(ofSize: 14)
 
       
         return view
