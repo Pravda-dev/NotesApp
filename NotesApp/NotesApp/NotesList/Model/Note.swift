@@ -13,5 +13,26 @@ struct Note: TableViewItemProtocol {
     let date: Date
     let imageURL: String?
     let image: Data?
-    
+    let category: NoteCategory
 }
+
+enum NoteCategory {
+    case personal
+    case work
+    case study
+    case other
+
+    var color: UIColor {
+        switch self {
+        case .personal:
+            return .blue
+        case .work:
+            return .orange
+        case .study:
+            return .green
+        case .other:
+            return .gray
+        }
+    }
+}
+

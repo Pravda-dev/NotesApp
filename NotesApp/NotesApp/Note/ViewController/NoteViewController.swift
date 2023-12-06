@@ -105,16 +105,51 @@ final class NoteViewController: UIViewController {
         textView.resignFirstResponder()
     }
     
+    @objc
+    private func selectCategoryAction() {
+        let alertController = UIAlertController(title: "Select Category",
+                                                message: nil,
+                                                preferredStyle: .actionSheet)
+        
+        let categories: [NoteCategory] = [.personal, .work, .study, .other]
+        
+        for category in categories {
+            let action = UIAlertAction(title: "\(category)",
+                                       style: .default) { [weak self] _ in
+               
+                print("Selected category: \(category)")
+            }
+            action.setValue(category.color, forKey: "titleTextColor")
+            alertController.addAction(action)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+
+    
     private func setupBars() {
+        let categoryButton = UIBarButtonItem(title: "Category",
+                                             style: .plain,
+                                             target: self,
+                                             action: #selector(selectCategoryAction))
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
         let trashButton = UIBarButtonItem(barButtonSystemItem: .trash,
                                           target: self,
                                           action: #selector(deleteAction))
-        setToolbarItems([trashButton], animated: true)
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save,
-                                                            target: self,
-                                                            action: #selector(saveAction))
-                          setToolbarItems([trashButton], animated: true)
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save,
+                                         target: self,
+                                         action: #selector(saveAction))
+        
+        setToolbarItems([trashButton, flexibleSpace, categoryButton, flexibleSpace, saveButton], animated: true)
+        
+        navigationItem.rightBarButtonItem = saveButton
     }
 }
+
 
