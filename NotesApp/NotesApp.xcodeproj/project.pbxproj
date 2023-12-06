@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD449D2C2B20BC20008480D4 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DD449D2A2B20BC20008480D4 /* Model.xcdatamodeld */; };
+		DD449D2F2B20BF48008480D4 /* NoteEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD449D2D2B20BF48008480D4 /* NoteEntity+CoreDataClass.swift */; };
+		DD449D302B20BF48008480D4 /* NoteEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD449D2E2B20BF48008480D4 /* NoteEntity+CoreDataProperties.swift */; };
+		DD449D322B20C1B6008480D4 /* NotePersistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD449D312B20C1B6008480D4 /* NotePersistent.swift */; };
+		DD449D342B20C305008480D4 /* NoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD449D332B20C305008480D4 /* NoteViewModel.swift */; };
 		DD6459EC2B1521EF00BD2106 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6459EB2B1521EF00BD2106 /* AppDelegate.swift */; };
 		DD6459F02B1521EF00BD2106 /* NotesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6459EF2B1521EF00BD2106 /* NotesListViewController.swift */; };
 		DD6459F52B1521F000BD2106 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD6459F42B1521F000BD2106 /* Assets.xcassets */; };
@@ -22,6 +27,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DD449D2B2B20BC20008480D4 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		DD449D2D2B20BF48008480D4 /* NoteEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DD449D2E2B20BF48008480D4 /* NoteEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DD449D312B20C1B6008480D4 /* NotePersistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePersistent.swift; sourceTree = "<group>"; };
+		DD449D332B20C305008480D4 /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModel.swift; sourceTree = "<group>"; };
 		DD6459E82B1521EF00BD2106 /* NotesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD6459EB2B1521EF00BD2106 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD6459EF2B1521EF00BD2106 /* NotesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +59,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DD449D292B20BBD9008480D4 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				DD449D2D2B20BF48008480D4 /* NoteEntity+CoreDataClass.swift */,
+				DD449D2E2B20BF48008480D4 /* NoteEntity+CoreDataProperties.swift */,
+				DD449D2A2B20BC20008480D4 /* Model.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		DD449D352B20C309008480D4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DD449D332B20C305008480D4 /* NoteViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		DD6459DF2B1521EF00BD2106 = {
 			isa = PBXGroup;
 			children = (
@@ -70,9 +98,11 @@
 			children = (
 				DD6459EB2B1521EF00BD2106 /* AppDelegate.swift */,
 				DD645A0E2B15274000BD2106 /* TableViewSection.swift */,
+				DD449D312B20C1B6008480D4 /* NotePersistent.swift */,
 				DDADAAD42B16451300F3A65C /* Note */,
 				DD645A0B2B1525BE00BD2106 /* NotesList */,
 				DD645A122B15373C00BD2106 /* Extensions */,
+				DD449D292B20BBD9008480D4 /* CoreData */,
 				DD6459F42B1521F000BD2106 /* Assets.xcassets */,
 				DD6459F62B1521F000BD2106 /* LaunchScreen.storyboard */,
 				DD6459F92B1521F000BD2106 /* Info.plist */,
@@ -127,17 +157,18 @@
 		DDADAAD42B16451300F3A65C /* Note */ = {
 			isa = PBXGroup;
 			children = (
-				DDADAAD52B16453E00F3A65C /* ViewController */,
+				DDADAAD52B16453E00F3A65C /* View */,
 			);
 			path = Note;
 			sourceTree = "<group>";
 		};
-		DDADAAD52B16453E00F3A65C /* ViewController */ = {
+		DDADAAD52B16453E00F3A65C /* View */ = {
 			isa = PBXGroup;
 			children = (
 				DDADAAD22B1644F300F3A65C /* NoteViewController.swift */,
+				DD449D352B20C309008480D4 /* ViewModel */,
 			);
-			path = ViewController;
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,13 +247,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD449D342B20C305008480D4 /* NoteViewModel.swift in Sources */,
 				DD645A112B15371C00BD2106 /* UIColor+Ex.swift in Sources */,
 				DD645A0F2B15274000BD2106 /* TableViewSection.swift in Sources */,
+				DD449D322B20C1B6008480D4 /* NotePersistent.swift in Sources */,
 				DD645A092B15255C00BD2106 /* Note.swift in Sources */,
 				DD6459F02B1521EF00BD2106 /* NotesListViewController.swift in Sources */,
 				DDADAAD32B1644F300F3A65C /* NoteViewController.swift in Sources */,
 				DD6459EC2B1521EF00BD2106 /* AppDelegate.swift in Sources */,
 				DD645A032B15235600BD2106 /* SimpleNoteTableViewCell.swift in Sources */,
+				DD449D2F2B20BF48008480D4 /* NoteEntity+CoreDataClass.swift in Sources */,
+				DD449D302B20BF48008480D4 /* NoteEntity+CoreDataProperties.swift in Sources */,
+				DD449D2C2B20BC20008480D4 /* Model.xcdatamodeld in Sources */,
 				DD645A0D2B1525FE00BD2106 /* NotesListViewModel.swift in Sources */,
 				DD645A052B15237900BD2106 /* ImageNoteTableViewCell.swift in Sources */,
 			);
@@ -456,6 +492,19 @@
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		DD449D2A2B20BC20008480D4 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DD449D2B2B20BC20008480D4 /* Model.xcdatamodel */,
+			);
+			currentVersion = DD449D2B2B20BC20008480D4 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DD6459E02B1521EF00BD2106 /* Project object */;
 }
