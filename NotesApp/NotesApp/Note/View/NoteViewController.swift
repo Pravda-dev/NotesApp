@@ -33,6 +33,8 @@ final class NoteViewController: UIViewController {
     
     //MARK: - Properties
     var viewModel: NoteViewModelProtocol?
+    private let imageHeight = 200
+    private var imageName: String?
     
     //MARK: - Life cycle
     override func viewDidLoad() {
@@ -51,16 +53,15 @@ final class NoteViewController: UIViewController {
     //MARK: - Methods
     private func configure() {
         textView.text = viewModel?.text
-//        guard let imageData = note.image,
-//              let image = UIImage(data: imageData) else { return }
-//        attachmentView.image = image
+        attachmentView.image = viewModel?.image
     }
     
     //MARK: - Private Methods
     @objc
     private func saveAction() {
-        viewModel?.save(with: textView.text)
-
+        viewModel?.save(with: textView.text,
+                        and: attachmentView.image,
+                        imageName: imageName)
         navigationController?.popViewController(animated: true)
     }
     
@@ -68,7 +69,15 @@ final class NoteViewController: UIViewController {
     private func deleteAction() {
         viewModel?.delete()
         navigationController?.popViewController(animated: true)
-
+    }
+    
+    @objc
+    private func addImage() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        
+        present(imagePicker, animated: true)
     }
     
     private func setupUI() {
@@ -83,12 +92,13 @@ final class NoteViewController: UIViewController {
                 .whitespacesAndNewlines).isEmpty ? 1 : 0
         
         setupConstraints()
-        setImageHeight()
         setupBars()
     }
     
     private func setupConstraints() {
         attachmentView.snp.makeConstraints { make in
+            let height = attachmentView.image != nil ? imageHeight : 0
+            make.height.equalTo(height)
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(10)
         }
         
@@ -99,11 +109,9 @@ final class NoteViewController: UIViewController {
         }
     }
     
-    private func setImageHeight() {
-        let height = attachmentView.image != nil ? 200 : 0
-        
-        attachmentView.snp.makeConstraints { make in
-            make.height.equalTo(height)
+    private func updateImageHeight() {
+        attachmentView.snp.updateConstraints { make in
+            make.height.equalTo(imageHeight)
         }
     }
     
@@ -112,51 +120,69 @@ final class NoteViewController: UIViewController {
         textView.resignFirstResponder()
     }
     
-    @objc
-    private func selectCategoryAction() {
-        let alertController = UIAlertController(title: "Select Category",
-                                                message: nil,
-                                                preferredStyle: .actionSheet)
-        
-        let categories: [NoteCategory] = [.personal, .work, .study, .other]
-        
-        for category in categories {
-            let action = UIAlertAction(title: "\(category)",
-                                       style: .default) { [weak self] _ in
-               
-                print("Selected category: \(category)")
-            }
-            action.setValue(category.color, forKey: "titleTextColor")
-            alertController.addAction(action)
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
+//    @objc
+//    private func selectCategoryAction() {
+//        let alertController = UIAlertController(title: "Select Category",
+//                                                message: nil,
+//                                                preferredStyle: .actionSheet)
+//        
+//        let categories: [NoteCategory] = [.personal, .work, .study, .other]
+//        
+//        for category in categories {
+//            let action = UIAlertAction(title: "\(category)",
+//                                       style: .default) { [weak self] _ in
+//               
+//                print("Selected category: \(category)")
+//            }
+//            action.setValue(category.color, forKey: "titleTextColor")
+//            alertController.addAction(action)
+//        }
+//        
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//        alertController.addAction(cancelAction)
+//        
+//        present(alertController, animated: true, completion: nil)
+//    }
 
     
     private func setupBars() {
-        let categoryButton = UIBarButtonItem(title: "Category",
-                                             style: .plain,
-                                             target: self,
-                                             action: #selector(selectCategoryAction))
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
+//        let categoryButton = UIBarButtonItem(title: "Category",
+//                                             style: .plain,
+//                                             target: self,
+//                                             action: #selector(selectCategoryAction))
         let trashButton = UIBarButtonItem(barButtonSystemItem: .trash,
+                                                  target: self,
+                                                  action: #selector(deleteAction))
+        
+        let photoButton = UIBarButtonItem(barButtonSystemItem: .camera,
                                           target: self,
-                                          action: #selector(deleteAction))
+                                          action: #selector(addImage))
         
-        let saveButton = UIBarButtonItem(barButtonSystemItem: .save,
-                                         target: self,
-                                         action: #selector(saveAction))
+        let space = UIBarButtonItem(systemItem: .flexibleSpace)
+
+        setToolbarItems([trashButton, space, photoButton, space], animated: true)
         
-        setToolbarItems([trashButton, flexibleSpace, categoryButton, flexibleSpace, saveButton], animated: true)
-        
-        navigationItem.rightBarButtonItem = saveButton
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save,
+                                                            target: self,
+                                                            action: #selector(saveAction))
     }
 }
 
+//MARK: - MyImagePickerControllerDelegate
+extension NoteViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let selectedImage = info[.originalImage] as? UIImage,
+            let url = info[.imageURL] as? URL else { return }
+        imageName = url.lastPathComponent //!!!!!!!!!!
+        attachmentView.image = selectedImage
+        updateImageHeight()
+        dismiss(animated: true)
+        
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+}
 

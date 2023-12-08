@@ -24,6 +24,7 @@
 		DD645A0F2B15274000BD2106 /* TableViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD645A0E2B15274000BD2106 /* TableViewSection.swift */; };
 		DD645A112B15371C00BD2106 /* UIColor+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD645A102B15371C00BD2106 /* UIColor+Ex.swift */; };
 		DDADAAD32B1644F300F3A65C /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDADAAD22B1644F300F3A65C /* NoteViewController.swift */; };
+		DDD7AFF22B225E2500766601 /* FileManagerPersistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD7AFF12B225E2500766601 /* FileManagerPersistent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		DD645A0E2B15274000BD2106 /* TableViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewSection.swift; sourceTree = "<group>"; };
 		DD645A102B15371C00BD2106 /* UIColor+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ex.swift"; sourceTree = "<group>"; };
 		DDADAAD22B1644F300F3A65C /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
+		DDD7AFF12B225E2500766601 /* FileManagerPersistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerPersistent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 				DD6459EB2B1521EF00BD2106 /* AppDelegate.swift */,
 				DD645A0E2B15274000BD2106 /* TableViewSection.swift */,
 				DD449D312B20C1B6008480D4 /* NotePersistent.swift */,
+				DDD7AFF12B225E2500766601 /* FileManagerPersistent.swift */,
 				DDADAAD42B16451300F3A65C /* Note */,
 				DD645A0B2B1525BE00BD2106 /* NotesList */,
 				DD645A122B15373C00BD2106 /* Extensions */,
@@ -253,6 +256,7 @@
 				DD449D322B20C1B6008480D4 /* NotePersistent.swift in Sources */,
 				DD645A092B15255C00BD2106 /* Note.swift in Sources */,
 				DD6459F02B1521EF00BD2106 /* NotesListViewController.swift in Sources */,
+				DDD7AFF22B225E2500766601 /* FileManagerPersistent.swift in Sources */,
 				DDADAAD32B1644F300F3A65C /* NoteViewController.swift in Sources */,
 				DD6459EC2B1521EF00BD2106 /* AppDelegate.swift in Sources */,
 				DD645A032B15235600BD2106 /* SimpleNoteTableViewCell.swift in Sources */,

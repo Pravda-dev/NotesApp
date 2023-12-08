@@ -12,6 +12,7 @@ protocol NotesListViewModelProtocol {
     var reloadTable: (() -> Void)? { get set }
     
     func getNotes()
+    func getImage(for url: URL) -> UIImage?
 }
 
 final class NotesListViewModel: NotesListViewModelProtocol {
@@ -48,19 +49,23 @@ final class NotesListViewModel: NotesListViewModelProtocol {
         
     }
     
+    func getImage(for url: URL) -> UIImage? {
+        FileManagerPersistent.read(from: url)
+    }
+    
     private func setMocks() {
         let section = TableViewSection(title: "1 december 2023", 
                                        items: [
                                         Note(title: "First title note",
                                              description: "First note description",
                                              date: Date(),
-                                             imageURL: nil,
-                                             category: .personal),
+                                             imageURL: nil
+                                             /*category: .personal*/),
                                         Note(title: "Second title note",
                                              description: "Second note description",
                                              date: Date(),
-                                             imageURL: nil,
-                                             category: .personal)
+                                             imageURL: nil
+                                             /*category: .personal*/)
                                        ])
         
         self.section = [section]

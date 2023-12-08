@@ -56,8 +56,8 @@ final class NotePersistent {
             Note(title: $0.title ?? "",
                  description: $0.text,
                  date: $0.date ?? Date(),
-                 imageURL: $0.imageUrl,
-                 category: nil)
+                 imageURL: $0.imageUrl
+                 /*category: nil*/)
         }
         return notes
     }

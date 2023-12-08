@@ -5,12 +5,13 @@
 //  Created by pravda on 06.12.2023.
 //
 
-import Foundation
+import UIKit
 
 protocol NoteViewModelProtocol {
     var text: String { get }
+    var image: UIImage? { get }
     
-    func save(with text: String)
+    func save(with text: String, and image: UIImage?, imageName: String?)
     func delete()
 }
 
@@ -21,20 +22,34 @@ final class NoteViewModel: NoteViewModelProtocol {
         (note?.description?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
         return text.trimmingCharacters(in: .whitespacesAndNewlines)
     }
+    
+    var image: UIImage? {
+        guard let url = note?.imageURL else { return nil }
+        return FileManagerPersistent.read(from: url)
+    }
+    
     init(note: Note?) {
         self.note = note
     }
+
     
     //MARK: - Methods
-    func save(with text: String) {
+    func save(with text: String, and image: UIImage?, imageName: String?) {
+        var url: URL? = note?.imageURL
+        
+        if let image = image,
+           let name = imageName {
+            url = FileManagerPersistent.save(image, with: name)
+        }
+        
         let date = note?.date ?? Date()
         let (title, description) = createTitleAndDescription(from: text)
         
         let note = Note(title: title,
                         description: description,
                         date: date,
-                        imageURL: nil,
-                        category: .personal)
+                        imageURL: url)
+//                        category: .personal)
         NotePersistent.save(note)
     }
     
@@ -43,6 +58,10 @@ final class NoteViewModel: NoteViewModelProtocol {
         guard let note = note else {
             return
         }
+        if let url = note.imageURL {
+            FileManagerPersistent.delete(from: url)
+        }
+        
         NotePersistent.delete(note)
     }
     //MARK: - Private Methods
