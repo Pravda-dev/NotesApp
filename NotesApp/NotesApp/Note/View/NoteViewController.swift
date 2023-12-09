@@ -36,6 +36,7 @@ final class NoteViewController: UIViewController, UITextViewDelegate {
     private let imageHeight = 200
     private var imageName: String?
     private var isNoteTextChanged = false
+    private var isImageChanged = false
     
     //MARK: - Life cycle
     override func viewDidLoad() {
@@ -145,7 +146,7 @@ final class NoteViewController: UIViewController, UITextViewDelegate {
                                          target: self,
                                          action: #selector(saveAction))
         
-        if isNoteTextChanged {
+        if isNoteTextChanged || attachmentView.image != viewModel?.image {
             navigationItem.rightBarButtonItem = saveButton
             saveButton.isEnabled = true
         } else {
@@ -171,6 +172,7 @@ extension NoteViewController: UIImagePickerControllerDelegate & UINavigationCont
         imageName = url.lastPathComponent //!!!!!!!!!!
         attachmentView.image = selectedImage
         updateImageHeight()
+        setupBars()
         dismiss(animated: true)
         
     }
