@@ -37,6 +37,7 @@ final class NoteViewController: UIViewController, UITextViewDelegate {
     private var imageName: String?
     private var isNoteTextChanged = false
     private var isImageChanged = false
+    private var isDeleteButtonIsEnabled = false
     
     //MARK: - Life cycle
     override func viewDidLoad() {
@@ -130,6 +131,14 @@ final class NoteViewController: UIViewController, UITextViewDelegate {
                                           target: self,
                                           action: #selector(deleteAction))
         
+        if isNoteTextChanged || attachmentView.image != viewModel?.image {
+            navigationItem.rightBarButtonItem = trashButton
+            trashButton.isEnabled = true
+        } else {
+            navigationItem.rightBarButtonItem = trashButton
+            trashButton.isEnabled = false
+        }
+        
         let photoButton = UIBarButtonItem(barButtonSystemItem: .camera,
                                           target: self,
                                           action: #selector(addImage))
@@ -158,9 +167,10 @@ final class NoteViewController: UIViewController, UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-            isNoteTextChanged = true
-            setupBars()
-        }
+        isNoteTextChanged = true
+//        isDeleteButtonIsEnabled = true
+        setupBars()
+    }
 }
 
 //MARK: - MyImagePickerControllerDelegate
