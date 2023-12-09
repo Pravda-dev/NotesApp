@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-final class NoteViewController: UIViewController {
+final class NoteViewController: UIViewController, UITextViewDelegate {
     //MARK: - GUI Variables
     private let attachmentView: UIImageView = {
         let view = UIImageView()
@@ -35,6 +35,7 @@ final class NoteViewController: UIViewController {
     var viewModel: NoteViewModelProtocol?
     private let imageHeight = 200
     private var imageName: String?
+    private var isNoteTextChanged = false
     
     //MARK: - Life cycle
     override func viewDidLoad() {
@@ -42,6 +43,7 @@ final class NoteViewController: UIViewController {
         
         configure()
         setupUI()
+        textView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -118,54 +120,46 @@ final class NoteViewController: UIViewController {
     @objc
     private func hideKeyboard() {
         textView.resignFirstResponder()
+//        trackChanges()
     }
     
-//    @objc
-//    private func selectCategoryAction() {
-//        let alertController = UIAlertController(title: "Select Category",
-//                                                message: nil,
-//                                                preferredStyle: .actionSheet)
-//        
-//        let categories: [NoteCategory] = [.personal, .work, .study, .other]
-//        
-//        for category in categories {
-//            let action = UIAlertAction(title: "\(category)",
-//                                       style: .default) { [weak self] _ in
-//               
-//                print("Selected category: \(category)")
-//            }
-//            action.setValue(category.color, forKey: "titleTextColor")
-//            alertController.addAction(action)
-//        }
-//        
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//        alertController.addAction(cancelAction)
-//        
-//        present(alertController, animated: true, completion: nil)
-//    }
-
-    
     private func setupBars() {
-//        let categoryButton = UIBarButtonItem(title: "Category",
-//                                             style: .plain,
-//                                             target: self,
-//                                             action: #selector(selectCategoryAction))
+        
         let trashButton = UIBarButtonItem(barButtonSystemItem: .trash,
-                                                  target: self,
-                                                  action: #selector(deleteAction))
+                                          target: self,
+                                          action: #selector(deleteAction))
         
         let photoButton = UIBarButtonItem(barButtonSystemItem: .camera,
                                           target: self,
                                           action: #selector(addImage))
         
         let space = UIBarButtonItem(systemItem: .flexibleSpace)
-
+        
         setToolbarItems([trashButton, space, photoButton, space], animated: true)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save,
                                                             target: self,
                                                             action: #selector(saveAction))
+        
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save,
+                                         target: self,
+                                         action: #selector(saveAction))
+        
+        if isNoteTextChanged {
+            navigationItem.rightBarButtonItem = saveButton
+            saveButton.isEnabled = true
+        } else {
+            navigationItem.rightBarButtonItem = saveButton
+            saveButton.isEnabled = false
+        }
+        
+        setToolbarItems([trashButton, space, photoButton, space], animated: true)
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+            isNoteTextChanged = true
+            setupBars()
+        }
 }
 
 //MARK: - MyImagePickerControllerDelegate
@@ -185,4 +179,5 @@ extension NoteViewController: UIImagePickerControllerDelegate & UINavigationCont
         dismiss(animated: true)
     }
 }
+
 
